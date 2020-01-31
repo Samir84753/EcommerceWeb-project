@@ -1,0 +1,2 @@
+djangoadmin username=samir
+djangoadmin passwd=samir

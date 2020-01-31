@@ -43,7 +43,10 @@ def registeruser(request):
     if password==re_password:
         new_user = User.objects.create_user(username, email, password)
         new_user.save()
-        sendemail('newregister.tpl',username,email)
+        try:
+            sendemail('newregister.tpl',username,email)
+        except:
+            print("setup email and password in settings.py")
         user = authenticate(request,username=username, password=password)
         login(request,user)
         user_ins=request.user
@@ -185,7 +188,10 @@ def docheckout(request):
 
     checkoutsave = checkout(firstname = Firstname,lastname = Lastname,contactnumber = Contact,message=msg,address = Address,email = Email,total=carttotaldetail,checkoutuser=user_ins,orderinfo=userorderinfo)
     try:
-        sendemail('checkoutdetail.tpl',user_ins,Email)
+        try:
+            sendemail('checkoutdetail.tpl',user_ins,Email)
+        except:
+            print("setup email and password in settings.py")
         checkoutsave.save()
         delcart = cartitem.objects.filter(cartuser=user_ins)
         delcart.delete()
@@ -220,5 +226,5 @@ def vieworders(request):
 
 def sendemail(emailtemplate,username,toemail):
     from mail_templated import EmailMessage
-    message = EmailMessage(emailtemplate, {'user': username},'nepaldigital.report@gmail.com',to=[toemail])
+    message = EmailMessage(emailtemplate, {'user': username},'your email',to=[toemail])
     message.send()
