@@ -1,2 +1,3 @@
 djangoadmin username=samir
 djangoadmin passwd=samir
+Setup email and email password in settings.py to use emailserver
