@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %}
+        <!-- Start Bradcaump area -->
+        <br><br><br><br>
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">My Orders</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="/">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Orders</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        {% endblock %}
+        {% block body %}
+        <div class="cart-main-area ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12 col-12">
+                                      
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-price">Product</th>
+                                            <th class="product-price">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for key, value in userorder %}
+                                       <tr>
+                                            <td class="product-name">{{key}}</td>
+                                            <td class="product-name">{{value}}</td>
+
+                                        </tr>   
+                                          
+                                    {% endfor %}
+                                
+                                    
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                
+                            <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                    <p>Your orders list will be reset once you receive your orders</p>
+                                </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="buttons-cart">
+                                        <a href="shop">Homepage</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 ">
+                                    <div class="cart_totals">
+                                        <h2>Cart Totals</h2>
+                                        <p>{{usertotal}}</p>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+       
+        <!-- cart-main-area end -->
+
+        {% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %} 
+        <!-- Start Bradcaump area -->
+        <br><br><br><br>
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Shop Page</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="index.html">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Shop Page</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area --> 
+        {% endblock %}
+{% block body %}
+        <!-- Start Slider Area -->
+        <!-- Start Our Product Area -->
+        <section class="htc__product__area ptb--130 bg__white">
+            <div class="container">
+                <div class="htc__product__container">
+                    <!-- Start Product MEnu -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="product__menu">
+                                <button data-filter="*"  class="is-checked">All</button>
+                                {% for type in types %}
+                                <button data-filter=".{{type.category}}">{{type.category}}</button>
+                                {% endfor%}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Product MEnu -->
+                    <div class="row product__list">
+                    {% for product in products %}
+                        <!-- Start Single Product -->
+                        <div class="col-md-3 single__pro col-lg-3 col-md-4 {{product.categorytype}} col-sm-12">
+                            <div class="product foo">
+                                <div class="product__inner">
+                                    <div class="pro__thumb">
+                                        <a href="productdetail?pid={{product.id}}">
+                                            <img src="{{product.productimg.url}}" alt="product images">
+                                        </a>
+                                    </div>
+                                    <div class="product__hover__info">
+                                        <ul class="product__action">
+                                            <li><a data-toggle="modal" data-target="#{{product.id}}" title="Quick View" class="quick-view modal-view detail-link" href="#"><span class="ti-plus"></span></a></li>
+                                            <li><a title="Add TO Cart" href={% if user.is_authenticated %}"cart?pid={{product.id}}"{% else %}"signup_or_signin"{% endif %}><span class="ti-shopping-cart"></span></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="add__to__wishlist">
+                                        <a data-toggle="tooltip" title="Add To Wishlist" class="add-to-cart" href={% if user.is_authenticated %}"wishlist?pid={{product.id}}"{% else %}"signup_or_signin"{% endif %}><span class="ti-heart"></span></a>
+                                    </div>
+                                </div>
+                                <div class="product__details">
+                                    <h2><a href="productdetail?pid={{product.id}}">{{product.productname}}</a></h2>
+                                    <ul class="product__price">
+                                        <li class="new__price">${{product.productprice}}</li>
+                                    </ul>
+                                </div> 
+                            </div>
+                        </div>
+                        <!-- End Single Product -->
+                         <!-- QUICKVIEW PRODUCT -->
+    <div id="quickview-wrapper">
+        <!-- Modal -->
+        <div class="modal fade" id="{{product.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal__container" role="document">
+                <div class="modal-content">
+                    <div class="modal-header modal__header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-product">
+                            <!-- Start product images -->
+                            <div class="product-images">
+                                <div class="main-image images">
+                                    <img alt="big images" src="{{product.productimg.url}}">
+                                </div>
+                            </div>
+                            <!-- end product images -->
+                            <div class="product-info">
+                                <h1>{{product.productname}}</h1>
+                                <div class="rating__and__review">
+                                    <ul class="rating">
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                    </ul>
+                                    <div class="review">
+                                        <a href="#">4 customer reviews</a>
+                                    </div>
+                                </div>
+                                <div class="price-box-3">
+                                    <div class="s-price-box">
+                                        <span class="new-price">${{product.productprice}}</span>
+                                    </div>
+                                </div>
+                                <div class="quick-desc">
+                                                {{product.productdescription}}                                
+                                </div>
+                                <div class="addtocart-btn">
+                                    <a href={% if user.is_authenticated %}"cart?pid={{product.id}}"{% else %}"signup_or_signin"{% endif %}>Add to cart</a>
+                                </div>
+                            </div><!-- .product-info -->
+                        </div><!-- .modal-product -->
+                    </div><!-- .modal-body -->
+                </div><!-- .modal-content -->
+            </div><!-- .modal-dialog -->
+        </div>
+        <!-- END Modal -->
+    </div>
+    <!-- END QUICKVIEW PRODUCT -->
+   
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Our Product Area -->
+       {% endblock %}

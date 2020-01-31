@@ -1,0 +1,15 @@
+<div class="dictionaryfield">
+    {% for widget_info in widgets.values %}
+        <div class="row2 row-for-{{ widget_info.id }}">
+            {% block label %}
+                {% if widget_info.label %}
+                    <label for="id_{{ widget_info.id }}">
+                        {{ widget_info.label }}{% if widget_info.label|last not in ".:!?" %}:{% endif %}
+                    </label>
+                {% endif %}
+            {% endblock %}
+            {{ widget_info.widget }}
+            {% if widget_info.help_text %}<span class="helptext">{{ widget_info.help_text|safe }}</span>{% endif %}
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %}
+        <!-- Start Bradcaump area -->
+        <br><br><br><br>
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Checkout</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="index.html">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Checkout</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        {% endblock %}
+        {% block body %}
+        <!-- Start Checkout Area -->
+        <section class="our-checkout-area ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-8">
+                        <div class="ckeckout-left-sidebar">
+                            <!-- Start Checkbox Area -->
+                            <form action='checkout' method="POST">
+                            {% csrf_token %} 
+                            <div class="checkout-form">
+                                <h2 class="section-title-3">Billing details</h2>
+                                <div class="checkout-form-inner">
+                                    <div class="single-checkout-box">
+                                        <input type="text" placeholder="First Name*" name="c_fname">
+                                        <input type="text" placeholder="Last Name*" name="c_lname">
+                                    </div>
+                                    <div class="single-checkout-box">
+                                        <input type="email" placeholder="Email*" name="c_email">
+                                        <input type="text" placeholder="Phone*" name="c_contact">
+                                    </div>
+                                    <div class="single-checkout-box">
+                                        <textarea placeholder="Message*" name="c_msg"></textarea>
+                                    </div>
+                    
+                                    <div class="single-checkout-box">
+                                        <input type="text" placeholder="Address*" name="c_address">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Checkbox Area -->
+                            <!-- Start Payment Box -->
+                            <div class="payment-form">
+                                <h2 class="section-title-3">Total</h2>
+                                <p>{{carttotaldetail}}</p>
+                                
+                            </div>
+                            <div class="wc-proceed-to-checkout">
+                                            <input type="submit" value="Checkout">
+                                        </div>
+                            <!-- End Payment Box -->
+                        </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="checkout-right-sidebar">
+                            <div class="our-important-note">
+                                <h2 class="section-title-3">Note :</h2>
+                                <p class="note-desc">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut laborekf et dolore magna aliqua.</p>
+                                <ul class="important-note">
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet</a></li>
+                                </ul>
+                            </div>
+                            <div class="puick-contact-area mt--60">
+                                <h2 class="section-title-3">Quick Contract</h2>
+                                <a href="phone:+8801722889963">+88 01900 939 500</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Checkout Area -->
+        {% endblock %}

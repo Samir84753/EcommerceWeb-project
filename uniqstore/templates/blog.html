@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %}
+        <!-- Start Bradcaump area -->
+        <br><br><br><br>
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Blog</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="index.html">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Blog</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+{% endblock %}
+{% block body %}
+        <!-- Start BLog Area -->
+        <div class="htc__blog__area bg__white ptb--120">
+            <div class="container">
+                <div class="row blog__wrap blog--page clearfix">
+                    <!-- Start Single Blog -->
+                    
+                                <div class="row">
+				{% for blog in blogs %}
+					<div class="col-md-6">
+						<article class="article-entry">
+							<div class="blog-details-thumb">
+                                        <img src="{{blog.img.url}}" alt="blog images">
+                                    </div>
+							<div class="desc">
+								<p class="meta"><span class="day">{{blog.postdate|date:"j"}}</span><span class="month">{{blog.postdate|date:"N"}}</span><span class="month">{{blog.postdate|date:"o"}}</span></p>
+								<p class="admin"><span>Posted by:</span> <span>{{blog.blogwriter}}</span></p>
+								<h2><a href="blog-details?bid={{blog.id}}">{{blog.blogtitle}}</a></h2>
+							</div>
+						</article>
+					</div>
+					{% endfor %}
+				</div>
+                    
+                    <!-- End Single Blog -->
+                    
+                </div>
+                <!-- Start Load More BTn -->
+                <div class="row mt--60">
+                    <div class="col-md-12">
+                        <div class="htc__loadmore__btn">
+                            <a href="#">load more</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Load More BTn -->
+            </div>
+        </div>
+        <!-- End BLog Area -->
+        {% endblock %}

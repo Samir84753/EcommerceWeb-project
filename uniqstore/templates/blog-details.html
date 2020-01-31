@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %}
+        <!-- Start Bradcaump area -->
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Blog Details</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="/">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Blog Details</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        {% endblock %}
+{% block body %}
+        <!-- Start Our Blog Area -->
+        <section class="blog-details-wrap ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="blog-details-left-sidebar">
+                            <div class="blog-details-top">
+                            {% for blog in blogs %}
+                           
+                                <!--Start Blog Thumb -->
+                                <div class="blog-details-thumb-wrap">
+                                    <div class="blog-details-thumb">
+                                        <img src="{{blog.img.url}}" alt="blog images">
+                                    </div>
+                                    <div class="upcoming-date">
+                                        {{blog.postdate|date:"j"}}<span class="upc-mth">{{blog.postdate|date:"N"}},{{blog.postdate|date:"o"}}</span>
+                                    </div>
+                                </div>
+                                <!--End Blog Thumb -->
+                                <h2>{{blog.blogtitle}}</h2>
+                                <div class="blog-admin-and-comment">
+                                    <p>BY : <a href="#">{{blog.blogwriter}}</a></p>
+                                    <p class="separator">|</p>
+                                    
+                                </div>
+                                <!-- Start Blog Pra -->
+                                <div class="blog-details-pra">
+                                <p>{{blog.blogbody|linebreaks}}</p>
+                                </div>
+                                <!-- End Blog Pra -->
+                                
+                                <!-- Start Blog Tags -->
+                                <div class="postandshare">
+                                    <div class="blog-social-icon">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- End Blog Tags -->
+                                <!-- Start Blog Comment Area -->
+                                <div class="our-blog-comment mt--20">
+                                    <div class="blog-comment-inner">
+                                        <h2 class="section-title-2">COMMENTS</h2>
+                                        <!-- Start Single Comment -->
+                                        {% for co in comments %}
+                                        <div>
+                                            
+                                            <div class="blog-comment-details">
+                                                <div class="comment-title-date">
+                                                    <p>{{co.commenter}}</p>
+                                               <div><p>{{co.commentdate|date:"j"}} {{co.commentdate|date:"N"}} {{co.commentdate|date:"o"}}</p></div>
+                                                    
+                                                </div>
+                                                <p>{{co.comment}}</p>
+                                            </div>
+                                            <br>
+                                        </div>
+                                        {% endfor %}
+                                        <!-- End Single Comment -->
+                                    </div>
+                                </div>
+                                <!-- End Blog Comment Area -->
+                                <!-- Start Reply Form -->
+                                <form method="POST" action='postcomment'>
+                                 {% csrf_token %}
+                                <div class="our-reply-form-area mt--20">
+                                    <h2 class="section-title-2">LEAVE A REPLY</h2>
+                                    <div class="reply-form-inner mt--40">
+                                        <div class="reply-form-box">
+                                            <div class="reply-form-box-inner">
+                                                <div class="rfb-single-input">
+                                                    <input type="hidden" name="blogid" value="{{blog.id}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="reply-form-box">
+                                            <textarea name="ucomment" placeholder="Comment"></textarea>
+                                        </div>
+                                        <div class="blog__details__btn">
+                                            {% if user.is_authenticated %}<input type="submit" value="Comment">
+                                            {% else %}<a href="signup_or_signin">Signup or login to post a comment</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                                {% endfor %}
+                                <!-- End Reply Form -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4  smt-30 xmt-40">
+                        <div class="blod-details-right-sidebar">
+                            <div class="category-search-area">
+                                <input placeholder="Search......" type="text">
+                                <a class="srch-btn" href="#"><i class="zmdi zmdi-search"></i></a>    
+                            </div>
+                          
+                            <!-- Start Letaest Blog Area -->
+                            <div class="our-recent-post mt--60">
+                                <h2 class="section-title-2">LATEST POST</h2>
+                                <div class="our-recent-post-wrap">
+                                {% for blog in latestblog %}
+                                    <!-- Start Single Post -->
+                                    <div class="single-recent-post">
+                                        <div class="recent-thumb">
+                                            <a href="blog-details?bid={{blog.id}}"><img src="{{blog.img.url}}" alt="post images"></a>
+                                        </div>
+                                        <div class="recent-details">
+                                            <div class="recent-post-dtl">
+                                                <h6><a href="blog-details?bid={{blog.id}}">{{blog.blogtitle}}</a></h6>
+                                            </div>
+                                            <div class="recent-post-time">
+                                                <p>{{blog.postdate|date:"j"}} {{blog.postdate|date:"N"}} {{blog.postdate|date:"o"}}</p>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Single Post -->
+                                    {% endfor %}
+                                   
+                                </div>
+                            </div>
+                            <!-- End Letaest Blog Area -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Our Blog Area -->  
+{% endblock %}

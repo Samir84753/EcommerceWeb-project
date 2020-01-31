@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %} 
+        <!-- Start Bradcaump area -->
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Product Details</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="index.html">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Product Details</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        {% endblock %}
+    {% block body %}
+        <!-- Start Product Details -->
+        {% for info in productinfo %}
+        <section class="htc__product__details pt--120 pb--100 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 col-sm-12">
+                        <div class="product__details__container">
+                            <div class="product__big__images">
+                                <div class="portfolio-full-image tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="img-tab-1">
+                                        <img src="{{info.productimg.url}}" alt="full-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-sm-12 smt-30 xmt-30">
+                        <div class="htc__product__details__inner">
+                            <div class="pro__detl__title">
+                                <h2>{{info.productname}}</h2>
+                            </div>
+                            
+                            <div class="pro__details">
+                                <p>{{info.productdescription}}</p>
+                            </div>
+                            <ul class="pro__dtl__prize">
+                                <li>Rs.{{info.productprice}}</li>
+                            </ul>
+                            
+                            <ul class="pro__dtl__btn">
+                                <li class="buy__now__btn"><a href={% if user.is_authenticated %}"cart?pid={{info.id}}"{% else %}"signup_or_signin"{% endif %}>ADD TO CART</a></li>
+                                <li><a href={% if user.is_authenticated %}"wishlist?pid={{info.id}}"{% else %}"signup_or_signin"{% endif %}><span class="ti-heart"></span></a></li>
+                            </ul>
+                            <div class="pro__social__share">
+                                <h2>Share :</h2>
+                                <ul class="pro__soaial__link">
+                                    <li><a href="https://twitter.com/devitemsllc" target="_blank"><i class="zmdi zmdi-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/devitems/" target="_blank"><i class="zmdi zmdi-instagram"></i></a></li>
+                                    <li><a href="https://www.facebook.com/devitems/?ref=bookmarks" target="_blank"><i class="zmdi zmdi-facebook"></i></a></li>
+                                    <li><a href="https://plus.google.com/" target="_blank"><i class="zmdi zmdi-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Product Details -->
+        {% endfor %}
+        <!-- Start Product tab -->
+        <section class="htc__product__details__tab bg__white pb--120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <ul class="nav product__deatils__tab mb--60" role="tablist">
+                            <li role="presentation" class="active">
+                                <a class="active" href="#description" role="tab" data-toggle="tab">Description</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#reviews" role="tab" data-toggle="tab">Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="product__details__tab__content">
+                            <!-- Start Single Content -->
+                            
+                            <div role="tabpanel" id="description" class="product__tab__content active">
+                            {% for info in productinfo %}
+                                <div class="product__description__wrap">
+                                    <div class="product__desc">
+                                        <h2 class="title__6">Details</h2>
+                                        <p>{{info.productdescription|linebreaks}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Content -->
+                            {% endfor %}
+                           
+                            <!-- Start Single Content -->
+                            <div role="tabpanel" id="reviews" class="product__tab__content">
+                            {% for review_view in reviews %}
+                                <div class="review__address__inner">
+                                    <!-- Start Single Review -->
+                                    <div class="pro__review">
+                                        
+                                        <div class="review__details">
+                                            <div class="review__info">
+                                                <h4><a href="#">{{review_view.reviewer}}</a></h4>
+                                                
+                                            </div>
+                                            <div class="review__date">
+                                                <span>{{review_view.reviewdate|date:"j"}} {{review_view.reviewdate|date:"N"}}, {{review_view.reviewdate|date:"o"}} {{review_view.reviewdate|date:"f"}}{{review_view.reviewdate|date:"a"}}</span>
+                                            </div>
+                                            <div style='width:200px;'>
+                                            <p>{{review_view.review}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Single Review -->
+                                    <br>
+                                 {% endfor %}  
+                                </div>
+                                
+                                <div class="review__box">
+                                    <form id="review-form" method="POST" action='sendreview'>
+                                    {% csrf_token %}
+                                        <div class="single-review-form">
+                                            <div class="review-box message">
+                                                <textarea placeholder="Write your review" name="review"></textarea>
+                                                {% for info in productinfo %}<input type="hidden" name="pid" value="{{info.id}}">{% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="review-btn">
+                                            {% if user.is_authenticated %}<input type="submit" value="Review">
+                                            {% else %}<a href="signup_or_signin">Signup or login to post a review</a>
+                                            {% endif %}
+                                        </div>
+                                    </form>                                
+                                </div>
+                                
+                            </div>
+                            <!-- End Single Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Product tab -->
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- QUICKVIEW PRODUCT -->
+    <div id="quickview-wrapper">
+        <!-- Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal__container" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-product">
+                            <!-- Start product images -->
+                            <div class="product-images">
+                                <div class="main-image images">
+                                    <img alt="big images" src="images/product/big-img/1.jpg">
+                                </div>
+                            </div>
+                            <!-- end product images -->
+                            <div class="product-info">
+                                <h1>Simple Fabric Bags</h1>
+                                <div class="rating__and__review">
+                                    <ul class="rating">
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                        <li><span class="ti-star"></span></li>
+                                    </ul>
+                                    <div class="review">
+                                        <a href="#">4 customer reviews</a>
+                                    </div>
+                                </div>
+                                <div class="price-box-3">
+                                    <div class="s-price-box">
+                                        <span class="new-price">$17.20</span>
+                                        <span class="old-price">$45.00</span>
+                                    </div>
+                                </div>
+                                <div class="quick-desc">
+                                    Designed for simplicity and made from high quality materials. Its sleek geometry and material combinations creates a modern look.
+                                </div>
+                                <div class="select__color">
+                                    <h2>Select color</h2>
+                                    <ul class="color__list">
+                                        <li class="red"><a title="Red" href="#">Red</a></li>
+                                        <li class="gold"><a title="Gold" href="#">Gold</a></li>
+                                        <li class="orange"><a title="Orange" href="#">Orange</a></li>
+                                        <li class="orange"><a title="Orange" href="#">Orange</a></li>
+                                    </ul>
+                                </div>
+                                <div class="select__size">
+                                    <h2>Select size</h2>
+                                    <ul class="color__list">
+                                        <li class="l__size"><a title="L" href="#">L</a></li>
+                                        <li class="m__size"><a title="M" href="#">M</a></li>
+                                        <li class="s__size"><a title="S" href="#">S</a></li>
+                                        <li class="xl__size"><a title="XL" href="#">XL</a></li>
+                                        <li class="xxl__size"><a title="XXL" href="#">XXL</a></li>
+                                    </ul>
+                                </div>
+                                <div class="social-sharing">
+                                    <div class="widget widget_socialsharing_widget">
+                                        <h3 class="widget-title-modal">Share this product</h3>
+                                        <ul class="social-icons">
+                                            <li><a target="_blank" title="rss" href="#" class="rss social-icon"><i class="zmdi zmdi-rss"></i></a></li>
+                                            <li><a target="_blank" title="Linkedin" href="#" class="linkedin social-icon"><i class="zmdi zmdi-linkedin"></i></a></li>
+                                            <li><a target="_blank" title="Pinterest" href="#" class="pinterest social-icon"><i class="zmdi zmdi-pinterest"></i></a></li>
+                                            <li><a target="_blank" title="Tumblr" href="#" class="tumblr social-icon"><i class="zmdi zmdi-tumblr"></i></a></li>
+                                            <li><a target="_blank" title="Pinterest" href="#" class="pinterest social-icon"><i class="zmdi zmdi-pinterest"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="addtocart-btn">
+                                    <a href="#">Add to cart</a>
+                                </div>
+                            </div><!-- .product-info -->
+                        </div><!-- .modal-product -->
+                    </div><!-- .modal-body -->
+                </div><!-- .modal-content -->
+            </div><!-- .modal-dialog -->
+        </div>
+        <!-- END Modal -->
+    </div>
+    {% endblock %}

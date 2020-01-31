@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block indexslide %}
+        <!-- Start Bradcaump area -->
+        <br><br><br><br>
+        <div class="ht__bradcaump__area" style='background: rgba(0, 0, 0, 0) url("{% static 'images/bg/new2.jpg' %}") no-repeat scroll center center / cover ;'>
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Cart</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="/">Home</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Cart</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        {% endblock %}
+        {% block body %}
+        <!-- cart-main-area start -->
+        <div class="cart-main-area ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                                      
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-quantity">Quantity</th>
+                                            <th class="product-subtotal">Sub-Total</th>
+                                            <th class="product-remove"></th>
+                                            <th class="product-remove"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cartitems in cartdetail %}
+                                    <form action="update" method="POST">
+                                    {% csrf_token %} 
+                                   
+                                        <tr>
+                                            <td class="product-name"><input type="text" value="{{cartitems.productcart}}" name="productcartname" readonly style="width:200px;"></td>
+                                            <td class="product-price" style="width:100px;"><input value="{{cartitems.cartprice}}" name="productcartprice" readonly style="width:100px;"></td>
+                                            <td class="product-quantity"><input type="number" value="{{cartitems.quantity}}" name="productcartquantity"/></td>
+                                            <td class="product-subtotal">{{cartitems.subtotal}}</td>
+                                            <input type="hidden" name="cartid" value="{{cartitems.id}}"/>
+                                            <td style="width:100px;"><input type="submit" value="Calculate" style="width:100px;"/></td>
+                                            <td class="product-remove"><a href="delete/{{ cartitems.id }}">X</a></td>
+                                        </tr>
+                                        </form> 
+                                        
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                            {% for message in messages %}
+                            <div class="col-md-8 col-sm-12">
+                                    <div class="buttons-cart">
+                                        <p>{{message}}</p>
+                                    </div>
+                                </div>{% endfor %}
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="buttons-cart">
+                                        <a href="shop">Continue Shopping</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="buttons-cart">
+                                        <a href="myorder">View My Orders</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 ">
+                                    <div class="cart_totals">  
+                                        <table>
+                                            <tbody>
+                                                
+                                                <tr class="order-total">
+                                                    <th>Grand Total</th>
+                                                    <td>
+                                                        <strong><span class="amount">{{grtotal}}</span></strong>
+                                                    </td>
+                                                </tr>  
+                                                                                        
+                                            </tbody>
+                                        </table>
+                                        <div class="wc-proceed-to-checkout">
+                                            <a href="checkoutview">Proceed to Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart-main-area end -->
+       {% endblock %}

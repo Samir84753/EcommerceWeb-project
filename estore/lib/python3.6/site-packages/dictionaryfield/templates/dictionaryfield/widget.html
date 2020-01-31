@@ -1,0 +1,18 @@
+{% extends "floppyforms/rows/p.html" %}
+
+{% load floppyforms %}
+
+{% block label %}
+    <h4>{{ label }}</h4>
+    {% if not help_text == 'Enter valid JSON' %}
+        <p>{{ help_text }}</p>
+    {% endif %}
+    {% include "floppyforms/errors.html" with errors=field.errors %}
+{% endblock %}
+
+{% block help_text %}
+{% endblock %}
+
+{% block errors %}
+{#    errors are rendered in other block    #}
+{% endblock %}
