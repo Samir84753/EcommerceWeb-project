@@ -3,7 +3,7 @@ Django==3.0.2
 django-dictionaryfield==1.0
 django-mail-templated==2.6.5
 jsonfield==1.0.3
-Pillow==7.0.0
+Pillow==9.3.0
 pytz==2019.3
 PyYAML==5.3
 six==1.14.0
